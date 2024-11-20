@@ -1,0 +1,21 @@
+version: '3.8'
+services:
+  random-forest-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: fernando581/random_forest-flask-app:v2
+    ports:  
+      - "5003:5000"  # Mapea el puerto 5003 del host al 5000 del contenedor
+    deploy:
+      replicas: 2
+      update_config:
+        parallelism: 2
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+    networks:
+      - app-network
+
+networks:
+  app-network:
